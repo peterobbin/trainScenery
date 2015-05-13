@@ -26,16 +26,7 @@ void ofApp::setup() {
     maskFbo.allocate(width,height);
     fbo.allocate(width,height);
     
-    // There are 3 of ways of loading a shader:
-    //
-    //  1 - Using just the name of the shader and ledding ofShader look for .frag and .vert:
-    //      Ex.: shader.load( "myShader");
-    //
-    //  2 - Giving the right file names for each one:
-    //      Ex.: shader.load( "myShader.vert","myShader.frag");
-    //
-    //  3 - And the third one it�s passing the shader programa on a single string;
-    //
+
     
     
 #ifdef TARGET_OPENGLES
@@ -164,14 +155,13 @@ void ofApp::update() {
     
     
     
-    // there is a new frame and we are connected
+
     if(kinect.isFrameNew()) {
         
-        // load grayscale depth image from the kinect source
+      
         grayImage.setFromPixels(kinect.getDepthPixels(), kinect.width, kinect.height);
         
-        // we do two thresholds - one for the far plane and one for the near plane
-        // we then do a cvAnd to get the pixels which are a union of the two thresholds
+
         if(bThreshWithOpenCV) {
             grayThreshNear = grayImage;
             grayThreshFar = grayImage;
@@ -180,7 +170,7 @@ void ofApp::update() {
             cvAnd(grayThreshNear.getCvImage(), grayThreshFar.getCvImage(), grayImage.getCvImage(), NULL);
         } else {
             
-            // or we do it ourselves - show people how they can work with the pixels
+           
             unsigned char * pix = grayImage.getPixels();
             
             int numPixels = grayImage.getWidth() * grayImage.getHeight();
@@ -193,19 +183,17 @@ void ofApp::update() {
             }
         }
         
-        // update the cv images
+      
         grayImage.flagImageChanged();
         
-        // find contours which are between the size of 20 pixels and 1/3 the w*h pixels.
-        // also, find holes is set to true so we will get interior contours as well....
+    
         contourFinder.findContours(grayImage, 10, (kinect.width*kinect.height)/2, 20, false);
     }
     
     blobTracker.update(grayImage, 80);
     
 
-
-    
+//---------------old hand tracking mask
 //    for (int i = 0; i < blobTracker.size(); i++){
 //
 //
@@ -244,14 +232,14 @@ void ofApp::update() {
     
     
         if (blobTracker[i].gotFingers){
-                       float  blobPosx = blobTracker[i].centroid.x * 700 ;
-                       float  blobPosy = blobTracker[i].centroid.y * ofGetHeight();
+                       float  blobPosx = blobTracker[i].centroid.x * 750 ;
+                       float  blobPosy = blobTracker[i].centroid.y * ofGetHeight() - 200;
             
             
             brushImg.draw(blobPosx, blobPosy, 400 * blobTracker[i].boundingRect.width,400 * blobTracker[i].boundingRect.height);
             
             
-            fingerReady = true;
+            fingerReady = true; 
             }else{
 //                fingerReady = false;
 //                int time = ofGetElapsedTimef()*1000;
@@ -265,6 +253,9 @@ void ofApp::update() {
 //            }
         }
     }
+    
+   
+//update screen and make the steam fo back
     
     
     int time = ofGetElapsedTimef()*1000;
@@ -321,8 +312,8 @@ void ofApp::draw() {
     
     
     
-     grayImage.draw(10, 320, 400, 300);
-     contourFinder.draw(10, 320, 400, 300);
+//     grayImage.draw(10, 320, 400, 300);
+//     contourFinder.draw(10, 320, 400, 300);
     
     
     
@@ -437,11 +428,11 @@ void ofApp::mouseDragged(int x, int y, int button)
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button)
-{  bBrushDown = true;}
+{}
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button)
-{  bBrushDown = false;}
+{}
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h)
