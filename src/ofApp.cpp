@@ -154,7 +154,10 @@ void ofApp::update() {
     
     
     
-    
+    if(trainview.getIsMovieDone()){
+        trainview.setPosition(0);
+        trainview.play();
+    }
 
     if(kinect.isFrameNew()) {
         
@@ -260,7 +263,6 @@ void ofApp::update() {
     
     int time = ofGetElapsedTimef()*1000;
     int timeModular = time%27;
-    cout<<timeModular<<endl;
     if(timeModular == 0){
         
         ofSetColor(0, 5);
@@ -312,8 +314,8 @@ void ofApp::draw() {
     
     
     
-//     grayImage.draw(10, 320, 400, 300);
-//     contourFinder.draw(10, 320, 400, 300);
+     grayImage.draw(10, 320, 400, 300);
+     contourFinder.draw(10, 320, 400, 300);
     
     
     
