@@ -235,10 +235,9 @@ void ofApp::update() {
     
     
         if (blobTracker[i].gotFingers){
-                       float  blobPosx = blobTracker[i].centroid.x * 750 ;
+                       float  blobPosx = blobTracker[i].centroid.x * 850 - 100;
                        float  blobPosy = blobTracker[i].centroid.y * ofGetHeight() - 200;
-            
-            
+                       
             brushImg.draw(blobPosx, blobPosy, 400 * blobTracker[i].boundingRect.width,400 * blobTracker[i].boundingRect.height);
             
             
@@ -313,9 +312,10 @@ void ofApp::draw() {
     fbo.draw(0,0,ofGetWidth(), ofGetHeight());
     
     
-    
+    if (mDrawKinectDepthImage){
      grayImage.draw(10, 320, 400, 300);
      contourFinder.draw(10, 320, 400, 300);
+    }
     
     
     
@@ -343,6 +343,7 @@ void ofApp::keyPressed (int key) {
     switch (key) {
         case ' ':
             bThreshWithOpenCV = !bThreshWithOpenCV;
+            mDrawKinectDepthImage = !mDrawKinectDepthImage;
             break;
             
         case'p':

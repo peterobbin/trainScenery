@@ -37,6 +37,7 @@ public:
     ofxBlobTracker blobTracker;
     bool bThreshWithOpenCV;
     bool bDrawPointCloud;
+    bool mDrawKinectDepthImage = false;
    
     
     int nearThreshold;
